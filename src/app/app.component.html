@@ -1,0 +1,66 @@
+<!-- *ngIf
+for ngIf the condition is checked to see if it will be displayed
+you can use conditional statements or function calls to which 
+evaluate to true or false. (added for true, removed for false)
+
+this html file is dependant upon the logic of this components ts 
+file. To refer the properties of another component use providers,
+and create an object.
+
+you can simulate if / else statements with templates and template 
+variables such as noCourse. # defines the template variable, when 
+referring to it no # is needed.
+
+The directive div chooses what to display, only the text is passed.
+
+-->
+
+
+<!--
+*ngIf is better for large groups of elements as the 
+hidden elements are not loaded and wasting resources 
+(the DOM does not contain them, less memory) 
+-->
+<div *ngIf="courses.length>0; then courseList else noCourses"></div>
+<!--# denotes a template variable-->
+<ng-template #courseList>
+    <h1>List of courses</h1>
+</ng-template>
+<ng-template #noCourses>
+    <h1>No courses yet</h1>
+</ng-template>
+
+<!--
+property binding with hidden
+for extremely dynamic components property binding with 
+hidden is better as the element is always 'ready' in the DOM
+-->
+<div [hidden]="courses.length==0">Property Binding</div>
+<div [hidden]="courses.length>0 ">Hidden is a property</div>
+
+<!--*ngSwitch
+ZEN CODING EXAMPLE...
+ul.nav.nav-pills will output ... <ul class="nav nav-pills"></ul>
+(li>a)*2...
+    <li><a href=""></a></li>
+    <li><a href=""></a></li> 
+
+-->
+<ul class="nav nav-tabs">
+    <!--property bind class.active to the value of viewMode-->
+    <li class="nav-link" [class.active]="viewMode=='map'"><a (click)="viewMode='map'">Map View</a></li>
+    <!--event bind click to change value of viewMode-->
+    <li class="nav-link" [class.active]="viewMode=='list'"><a (click)="viewMode='list'">List View</a></li>    
+</ul>
+
+<div [ngSwitch]="viewMode">
+<!-- double quotes for directive value, single quotes for string-->
+    <div *ngSwitchCase=" 'map' ">Map View Content</div>
+<!--when viewMode is list display this...-->
+    <div *ngSwitchCase=" 'list' ">List View Content</div>
+<!--if the value of the switch matches no cases do this... -->
+    <div *ngSwitchDefault>Otherwise</div>
+</div>
+
+
+
