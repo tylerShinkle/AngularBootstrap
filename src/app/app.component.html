@@ -48,18 +48,29 @@ ul.nav.nav-pills will output ... <ul class="nav nav-pills"></ul>
 -->
 <ul class="nav nav-tabs">
     <!--property bind class.active to the value of viewMode-->
-    <li class="nav-link" [class.active]="viewMode=='map'"><a (click)="viewMode='map'">Map View</a></li>
+    <li [class.active]="viewMode=='map'"><a (click)="viewMode='map'">Map View</a></li>
     <!--event bind click to change value of viewMode-->
-    <li class="nav-link" [class.active]="viewMode=='list'"><a (click)="viewMode='list'">List View</a></li>    
+    <li [class.active]="viewMode=='list'"><a (click)="viewMode='list'">List View</a></li>
+    <li [class.active]="viewMode=='cart'"><a (click)="viewMode='cart'">Cart View</a></li>     
 </ul>
 
 <div [ngSwitch]="viewMode">
 <!-- double quotes for directive value, single quotes for string-->
-    <div *ngSwitchCase=" 'map' ">Map View Content</div>
+    <div *ngSwitchCase=" 'list' ">Map View Content</div>
 <!--when viewMode is list display this...-->
-    <div *ngSwitchCase=" 'list' ">List View Content</div>
+    <div *ngSwitchCase=" 'map' ">List View Content</div>
 <!--if the value of the switch matches no cases do this... -->
+    <div *ngSwitchCase=" 'cart' ">Cart View Content</div>
     <div *ngSwitchDefault>Otherwise</div>
+    <ul *ngIf="viewMode=='map'">
+        <li *ngFor="let course of courses">Course Map {{course}}</li>
+    </ul>
+    <ul *ngIf="viewMode=='list'">
+        <li *ngFor="let course of courses">Course List {{course}}</li>
+    </ul>
+    <ul *ngIf="viewMode=='cart'">
+        <li *ngFor="let course of courses">Cart Map {{course}}</li>
+    </ul>
 </div>
 
 

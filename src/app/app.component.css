@@ -1,0 +1,28 @@
+.nav{
+    background-color: black;
+    color: white;
+}
+
+.nav>li{
+    margin:1em;
+    padding:.5em;
+    font-size: 1.25em;
+    border-radius: .5em;
+}
+
+.active{
+    background-color: white;
+    color:black;
+    padding:1em;
+}
+
+div{
+    color:black;
+    line-height: 2em;
+    font-size: 1.25em;
+    padding-left:.5em;
+}
+
+h1{
+    text-align:center;
+}
