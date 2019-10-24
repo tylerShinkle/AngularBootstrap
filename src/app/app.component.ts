@@ -8,7 +8,27 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'directives';
   courses = [1,2,3,];
-  viewMode = 'map';
+  viewMode = 'your';
+  name = 'Tyler';
+  public files: any[];
+
+  goToFriend(friend){
+    alert("visitied friend "+friend);
+  }
+
+  
+  onFileChanged(event: any) {
+    this.files = event.target.files;
+  }
+
+  onUpload() {
+    const formData = new FormData();
+    for (const file of this.files) {
+        formData.append(name, file, file.name);
+    }
+    this.http.post('url', formData).subscribe(x => ....);
+  }
+
 }
 
 

@@ -21,13 +21,13 @@ The directive div chooses what to display, only the text is passed.
 hidden elements are not loaded and wasting resources 
 (the DOM does not contain them, less memory) 
 -->
-<div *ngIf="courses.length>0; then courseList else noCourses"></div>
+<div *ngIf="courses.length>0; then home else away"></div>
 <!--# denotes a template variable-->
-<ng-template #courseList>
-    <h1>List of courses</h1>
+<ng-template #home>
+    <h1>Welcome, {{name}} !</h1>
 </ng-template>
-<ng-template #noCourses>
-    <h1>No courses yet</h1>
+<ng-template #away>
+    <h1>{{freind}}'s page</h1>
 </ng-template>
 
 <!--
@@ -35,8 +35,9 @@ property binding with hidden
 for extremely dynamic components property binding with 
 hidden is better as the element is always 'ready' in the DOM
 -->
-<div [hidden]="courses.length==0">Property Binding</div>
-<div [hidden]="courses.length>0 ">Hidden is a property</div>
+<div id="navTop" [hidden]="viewMode!='your'">Your Images</div>
+<div id="navTop" [hidden]="viewMode!='fav'">Favorite Images</div>
+<div id="navTop" [hidden]="viewMode!='their'">Their Images</div>
 
 <!--*ngSwitch
 ZEN CODING EXAMPLE...
@@ -48,29 +49,37 @@ ul.nav.nav-pills will output ... <ul class="nav nav-pills"></ul>
 -->
 <ul class="nav nav-tabs">
     <!--property bind class.active to the value of viewMode-->
-    <li [class.active]="viewMode=='map'"><a (click)="viewMode='map'">Map View</a></li>
+    <li [class.active]="viewMode=='map'"><a (click)="viewMode='your'">Your View</a></li>
     <!--event bind click to change value of viewMode-->
-    <li [class.active]="viewMode=='list'"><a (click)="viewMode='list'">List View</a></li>
-    <li [class.active]="viewMode=='cart'"><a (click)="viewMode='cart'">Cart View</a></li>     
+    <li [class.active]="viewMode=='list'"><a (click)="viewMode='fav'">Favorite View</a></li>
+    <li [class.active]="viewMode=='cart'"><a (click)="viewMode='their'">Their View</a></li>     
 </ul>
 
-<div [ngSwitch]="viewMode">
+<div id="listDisplay" [ngSwitch]="viewMode">
 <!-- double quotes for directive value, single quotes for string-->
-    <div *ngSwitchCase=" 'list' ">Map View Content</div>
+    <div *ngSwitchCase=" 'your' ">Your View Content</div>
 <!--when viewMode is list display this...-->
-    <div *ngSwitchCase=" 'map' ">List View Content</div>
+    <div *ngSwitchCase=" 'fav' ">Fav View Content</div>
 <!--if the value of the switch matches no cases do this... -->
-    <div *ngSwitchCase=" 'cart' ">Cart View Content</div>
+    <div *ngSwitchCase=" 'their' ">Their View Content</div>
     <div *ngSwitchDefault>Otherwise</div>
-    <ul *ngIf="viewMode=='map'">
-        <li *ngFor="let course of courses">Course Map {{course}}</li>
+    <ul *ngIf="viewMode=='your'">
+        <li *ngFor="let course of courses">Your photo #{{course}}</li>
     </ul>
-    <ul *ngIf="viewMode=='list'">
-        <li *ngFor="let course of courses">Course List {{course}}</li>
+    <ul *ngIf="viewMode=='fav'">
+        <li *ngFor="let course of courses">Fav photo #{{course}}</li>
     </ul>
-    <ul *ngIf="viewMode=='cart'">
-        <li *ngFor="let course of courses">Cart Map {{course}}</li>
+    <ul *ngIf="viewMode=='their'">
+        <li (click)="goToFriend(course)"*ngFor="let course of courses">Their photo #{{course}}</li>
     </ul>
+
+    <input type="file" (change)="onFileChanged($event)">
+
+    <img [src]="url" height="200"> <br/>
+
+
+
+
 </div>
 
 
